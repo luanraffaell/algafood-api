@@ -8781,3 +8781,45 @@ org.eclipse.jface.text.BadLocationException
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:17:30.333
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.RQnuXYif => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:00.906
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:00.906
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@52d86110[org.springframework.tooling.boot.ls:1.33.0.202204250653(id=569)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:00.907
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.811
+!MESSAGE Boot LS startup time from start to initialized: 2903ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.915
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.irjcFbbSisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.915
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.916
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.916
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.916
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.917
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.irjcFbbS => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.924
+!MESSAGE classpath=91 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.929
+!MESSAGE buffering callback sts4.classpath.irjcFbbS algafood-api false 91
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:03.929
+!MESSAGE executing callback sts4.classpath.irjcFbbS 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-06-13 09:24:04.368
+!MESSAGE executing callback sts4.classpath.irjcFbbS SUCCESS [done]
