@@ -22,7 +22,16 @@ public class Cozinha implements Serializable {
 	private Long id;
 	
 	private String nome;
+	
+	public Cozinha() {
+		// TODO Auto-generated constructor stub
+	}
 
+	public Cozinha(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
 
 	
 }
