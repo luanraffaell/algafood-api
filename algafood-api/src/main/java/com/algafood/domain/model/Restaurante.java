@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Restaurante implements Serializable {
 	private BigDecimal taxaFrete;
 	
 	@ManyToOne
+	@JoinColumn(name = "cozinha_id") //apenas caso eu queira renomear o nome na tabela
 	private Cozinha cozinha;
 	
 	

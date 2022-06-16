@@ -18,4 +18,6 @@
     <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
     <fullyQualifiedTypeName name="lombok.Getter"/>
     <fullyQualifiedTypeName name="lombok.Setter"/>
+    <fullyQualifiedTypeName name="com.algafood.domain.repository.RestauranteRepository"/>
+    <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
 </qualifiedTypeNameHistroy>
