@@ -3,6 +3,7 @@ package com.algafood.domain.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,10 +25,11 @@ public class Restaurante implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 	
 	@ManyToOne
-	@JoinColumn(name = "cozinha_id") //apenas caso eu queira renomear o nome na tabela
+	@JoinColumn(name = "cozinha_id", nullable = false) //apenas caso eu queira renomear o nome na tabela
 	private Cozinha cozinha;
 	
 	
