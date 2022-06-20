@@ -1,0 +1,11 @@
+package com.algafood.domain.repository;
+
+import java.util.List;
+
+public interface FormaDePagamentoRepository {
+	List<FormaDePagamentoRepository> listar();
+	FormaDePagamentoRepository buscar(Long id);
+	FormaDePagamentoRepository salvar(FormaDePagamentoRepository forma);
+	void remover(FormaDePagamentoRepository forma);
+	
+}
