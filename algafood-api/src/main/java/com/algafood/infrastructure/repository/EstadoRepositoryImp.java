@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.EstadoRepository;
 
+@Repository
 public class EstadoRepositoryImp implements EstadoRepository {
 	private EntityManager manager;
 	

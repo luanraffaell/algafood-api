@@ -1,0 +1,17 @@
+package com.algafood.api.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.algafood.domain.model.Cozinha;
+import com.algafood.domain.repository.CozinhaRepository;
+
+public class CozinhaController {
+	
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
+	public List<Cozinha> listar(){
+		return cozinhaRepository.listar();
+	}
+}
