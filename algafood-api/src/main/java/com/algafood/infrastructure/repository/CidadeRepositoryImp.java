@@ -3,6 +3,7 @@ package com.algafood.infrastructure.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import com.algafood.domain.repository.CidadeRepository;
 
 @Repository
 public class CidadeRepositoryImp implements CidadeRepository {
+	@PersistenceContext
 	private EntityManager manager;
 	@Override
 	public List<Cidade> listar() {
@@ -31,8 +33,8 @@ public class CidadeRepositoryImp implements CidadeRepository {
 	
 	@Transactional
 	@Override
-	public void remover(Cidade cidade) {
-		cidade = buscar(cidade.getId());
+	public void remover(Long id) {
+		Cidade cidade = buscar(id);
 		manager.remove(cidade);
 		
 	}
