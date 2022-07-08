@@ -35,10 +35,7 @@ public class CadastroRestauranteService {
 	}
 	
 	private Cozinha buscarCozinha(Long id) {
-		Cozinha cozinha = cozinhaRepository.buscar(id);
-		if(cozinha == null) {
-			throw new EntidadeNaoEncontradaException("Não existe cadastro de cozinha com o código:"+id);
-		}
+		Cozinha cozinha = cozinhaRepository.findById(id).orElseThrow(()-> new EntidadeNaoEncontradaException("Não existe cadastro de cozinha com o código:"+id));
 		return cozinha;
 	}
 }

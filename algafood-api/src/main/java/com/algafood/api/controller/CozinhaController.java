@@ -1,6 +1,7 @@
 package com.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,14 @@ public class CozinhaController {
 	
 	@GetMapping
 	public List<Cozinha> listar(){
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
-		Cozinha cozinha =  cozinhaRepository.buscar(id);
-		if(cozinha != null) {
-		return ResponseEntity.ok().body(cozinha);
+		Optional<Cozinha> cozinha =  cozinhaRepository.findById(id);
+		if(cozinha.isPresent()) {
+		return ResponseEntity.ok().body(cozinha.get());
 		}else {
 			return ResponseEntity.notFound().build();
 		}
@@ -55,17 +56,17 @@ public class CozinhaController {
 	
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha){
-		Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
+		Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
 		
-		if(cozinhaAtual != null) {
+		if(cozinhaAtual.isPresent()) {
 //		cozinhaAtual.setNome(cozinha.getNome());
-		BeanUtils.copyProperties(cozinha, cozinhaAtual,"id");
-		return ResponseEntity.ok().body(cadastroCozinha.salvar(cozinhaAtual));
+		BeanUtils.copyProperties(cozinha, cozinhaAtual.get(),"id");
+		return ResponseEntity.ok().body(cadastroCozinha.salvar(cozinhaAtual.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId){
+	public ResponseEntity<?> remover(@PathVariable Long cozinhaId){
 		try {
 			cadastroCozinha.excluir(cozinhaId);
 		return ResponseEntity.noContent().build();
@@ -73,7 +74,7 @@ public class CozinhaController {
 			return ResponseEntity.notFound().build(); 
 		}
 		catch(EntidadeEmUsoException e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 	}
 }
