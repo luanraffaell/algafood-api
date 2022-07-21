@@ -1,0 +1,11 @@
+package com.algafood.domain.repository;
+
+import java.util.List;
+
+import com.algafood.domain.model.Cidade;
+
+public interface CidadeRepository {
+	
+}
+//não possui nenhum detalhe de qual é o mecanismo de persistencia de repositorio.
+//também é chamado de repositorio orientado a persistência.

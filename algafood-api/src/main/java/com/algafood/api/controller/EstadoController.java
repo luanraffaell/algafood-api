@@ -1,6 +1,7 @@
 package com.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class EstadoController {
 	
 	@GetMapping
 	public List<Estado> listar(){
-		List<Estado> estados = estadoRepository.listar();
+		List<Estado> estados = estadoRepository.findAll();
 		return estados;
 	}
 	
@@ -46,18 +47,18 @@ public class EstadoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Estado> buscar(@PathVariable Long id){
-		Estado estado = estadoRepository.buscar(id);
-		if(estado == null) {
+		Optional<Estado> estado = estadoRepository.findById(id);
+		if(estado.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok().body(estado);
+		return ResponseEntity.ok().body(estado.get());
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Estado estado) {
 		try {
-			Estado estadoAtual = estadoRepository.buscar(id);
-			if(estadoAtual != null) {
+			Optional<Estado> estadoAtual = estadoRepository.findById(id);
+			if(estadoAtual.isPresent()) {
 				estado.setId(id);
 				return ResponseEntity.ok().body(estadoService.atualizar(estado));
 			}
