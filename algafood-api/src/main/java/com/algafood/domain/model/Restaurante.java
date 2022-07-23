@@ -26,7 +26,7 @@ public class Restaurante implements Serializable {
 	private Long id;
 	@Column(nullable = false)
 	private String nome;
-	@Column(name = "taxa_frete", nullable = false)
+	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
 	@ManyToOne
