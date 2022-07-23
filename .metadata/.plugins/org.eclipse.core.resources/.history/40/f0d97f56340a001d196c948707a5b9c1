@@ -28,11 +28,4 @@ public class TestController {
 	public List<Restaurante> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal){
 		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
 	}
-	//localhost:8080/teste/restaurante/por-taxa-frete?taxaInicial=1&taxaFinal=100
-	//taxas são inseridas no param do postman
-	
-	@GetMapping("/restaurante/por-nome")
-	public List<Restaurante> restaurantesPorTaxaFrete(String nome, Long cozinhaId){
-		return restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinhaId);
-	}
 }
