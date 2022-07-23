@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.data.util.Predicates;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
