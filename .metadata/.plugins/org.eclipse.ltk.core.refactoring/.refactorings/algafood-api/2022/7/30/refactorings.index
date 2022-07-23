@@ -5,3 +5,8 @@
 1658436425463	Delete element
 1658437176581	Delete element
 1658547447228	Rename resource 'META-INFO'
+1658595009354	Rename type 'RestauranteRepositoryImpl'
+1658595560995	Rename type 'RestauranteRepositoryImp'
+1658596502753	Extract interface 'RestauranteRepositoryQueries'
+1658596537695	Move compilation unit
+1658596852594	Delete element

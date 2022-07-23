@@ -8,13 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import com.algafood.domain.model.Restaurante;
 
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries {
 	
 	//@Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
 	List<Restaurante> consultaPorNome(String nome, @Param("id") Long cozinha);
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial,BigDecimal taxaFinal);
 	
-	//List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
+	List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
+	
 }
 //não possui nenhum detalhe de qual é o mecanismo de persistencia de repositorio.
 //também é chamado de repositorio orientado a persistência.
