@@ -40,6 +40,7 @@ public class Restaurante implements Serializable {
 	@JoinColumn(name = "cozinha_id", nullable = false) //apenas caso eu queira renomear o nome na tabela
 	private Cozinha cozinha;
 	
+	@JsonIgnore
 	@Embedded //propriedade de um tipo incorporavel. Incorporação
 	private Endereco endereco;
 	
