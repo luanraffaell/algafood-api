@@ -33,7 +33,7 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = restauranteRepository.findById(restaurante.getId())
 				.orElseThrow(()-> new EntidadeNaoEncontradaException("Não existe um restaurante com id:"+restaurante.getId()));
 		restaurante.setCozinha(cozinhaAtual);
-		BeanUtils.copyProperties(restaurante, restauranteAtual,"id","formasPagamento","endereco");
+		BeanUtils.copyProperties(restaurante, restauranteAtual,"id","formasPagamento","endereco","dataCadastro");
 		return salvar(restauranteAtual);
 	}
 	public Restaurante remover(Long id) {
