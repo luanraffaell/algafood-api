@@ -1144,3 +1144,45 @@ Caused by: java.lang.NullPointerException: Cannot invoke "java.util.concurrent.C
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:31:51.323
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.scVJsDZZ => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:37.054
+!MESSAGE Entering DelegatingStreamConnectionProvider()
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:37.069
+!MESSAGE DelegatingStreamConnectionProvider classloader = org.eclipse.osgi.internal.loader.EquinoxClassLoader@24e6bd00[org.springframework.tooling.boot.ls:1.33.0.202204250653(id=569)]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:37.070
+!MESSAGE SpringBootLanguageServer exists!
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.850
+!MESSAGE Boot LS startup time from start to initialized: 3752ms
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.961
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.jPOfWHiLisBatched = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.961
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.962
+!MESSAGE Scheduling initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.962
+!MESSAGE Scheduling initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.962
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.963
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.jPOfWHiL => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.971
+!MESSAGE classpath=94 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.976
+!MESSAGE buffering callback sts4.classpath.jPOfWHiL algafood-api false 94
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:40.977
+!MESSAGE executing callback sts4.classpath.jPOfWHiL 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2022-07-29 21:59:41.407
+!MESSAGE executing callback sts4.classpath.jPOfWHiL SUCCESS [done]
