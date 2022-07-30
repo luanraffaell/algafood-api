@@ -63,7 +63,6 @@ INDEX VERSION 1.131+E:\Temp\ws-sts\Algawork\Algafood\.metadata\.plugins\org.ecli
 677547205.index
 897968077.index
 844854161.index
-4079544754.index
 3758740740.index
 3747426959.index
 1865797976.index
