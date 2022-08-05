@@ -1,5 +1,5 @@
 package com.algafood.domain.model;
-
+ 
 import java.util.ArrayList;
 import java.util.List;
 
