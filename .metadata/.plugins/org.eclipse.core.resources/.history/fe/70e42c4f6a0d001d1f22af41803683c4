@@ -1,8 +1,0 @@
-spring.profiles.active=test
-spring.jpa.open-in-view=true
-
-spring.datasource.hikari.maximum-pool-size=10
-spring.datasource.hikari.minimum-idle=5
-#por padrão é 10 conexões no maximo e minimo
-
-spring.datasource.hikari.idle-timeout=10000
