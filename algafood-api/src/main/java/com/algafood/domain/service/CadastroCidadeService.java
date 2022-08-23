@@ -15,6 +15,8 @@ import com.algafood.domain.repository.EstadoRepository;
 @Service
 public class CadastroCidadeService {
 	
+	private static final String MSG_CIDADE_NAO_ENCONTRADA = "Não foi encontrada uma cidade com o id:";
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
@@ -31,18 +33,19 @@ public class CadastroCidadeService {
 		try {
 		cidadeRepository.deleteById(id);
 		}catch(EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException("Não foi encontrada uma cidade com o id:"+id);
+			throw new EntidadeNaoEncontradaException(MSG_CIDADE_NAO_ENCONTRADA+id);
 		}catch(DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException("Cidade com id "+id+" se encontra em uso!");
 		}
 	}
 	
 	private Estado buscarEstado(Long id) {
-		Estado estado = estadoRepository.findById(id).get();
-		if(estado == null) {
-			throw new EntidadeNaoEncontradaException("Estado com id "+id+" não encontrado!");
-		}
-		return estado;
+		return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Estado com id "+id+" não encontrado!"));
+
+	}
+	
+	public Cidade buscarOuFalhar(Long id) {
+		return cidadeRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_CIDADE_NAO_ENCONTRADA));
 	}
 	
 }

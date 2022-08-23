@@ -3,6 +3,7 @@ package com.algafood.domain.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.EntidadeEmUsoException;
@@ -14,6 +15,8 @@ import com.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe um restaurante com id:";
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
@@ -31,18 +34,18 @@ public class CadastroRestauranteService {
 	public Restaurante atualizar(Restaurante restaurante) {
 		Cozinha cozinhaAtual = buscarCozinha(restaurante.getCozinha().getId());
 		Restaurante restauranteAtual = restauranteRepository.findById(restaurante.getId())
-				.orElseThrow(()-> new EntidadeNaoEncontradaException("Não existe um restaurante com id:"+restaurante.getId()));
+				.orElseThrow(()-> new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO+restaurante.getId()));
 		restaurante.setCozinha(cozinhaAtual);
 		BeanUtils.copyProperties(restaurante, restauranteAtual,"id","formasPagamento","endereco","dataCadastro");
 		return salvar(restauranteAtual);
 	}
-	public Restaurante remover(Long id) {
-		Restaurante restauranteAtual = restauranteRepository.findById(id)
-				.orElseThrow(()-> new EntidadeNaoEncontradaException("Não existe um restaurante com id:"+id));
+	public void remover(Long id) {
 		try {
-		restauranteRepository.deleteById(id);
-		return restauranteAtual;
-		}catch(DataIntegrityViolationException e) {
+		 restauranteRepository.deleteById(id);
+		}catch(EmptyResultDataAccessException e) {
+			throw new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO+id);
+		}
+		catch(DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException("Restaurante com id "+id+" não pode ser excluido pois está em uso!");
 		}
 	}
@@ -52,4 +55,7 @@ public class CadastroRestauranteService {
 		return cozinha;
 	}
 	
+	public Restaurante buscarOuFalhar(Long id) {
+		return restauranteRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_RESTAURANTE_NAO_ENCONTRADO));
+	}
 }
