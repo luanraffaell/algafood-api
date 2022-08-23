@@ -81,12 +81,10 @@ public class CozinhaController {
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cozinhaId) {
-		try {	
 		cadastroCozinha.excluir(cozinhaId);
-		}catch(EntidadeNaoEncontradaException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Não existe um cadastro de cozinha com o código:%d", cozinhaId));
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Não existe um cadastro de cozinha com o código:%d", cozinhaId));
 //			throw new ServerWebInputException(String.format("Não existe um cadastro de cozinha com o código:%d", cozinhaId));
-		}
+
 
 	}
 }
