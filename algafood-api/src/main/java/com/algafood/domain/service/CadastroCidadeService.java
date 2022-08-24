@@ -6,8 +6,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.EntidadeEmUsoException;
-import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.EstadoNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
@@ -18,7 +18,6 @@ import com.algafood.domain.repository.EstadoRepository;
 @Service
 public class CadastroCidadeService {
 	
-	private static final String MSG_CIDADE_NAO_ENCONTRADA = "Não foi encontrada uma cidade com o id:";
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -40,7 +39,7 @@ public class CadastroCidadeService {
 		try {
 		cidadeRepository.deleteById(id);
 		}catch(EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(MSG_CIDADE_NAO_ENCONTRADA+id);
+			throw new CidadeNaoEncontradaException(id);
 		}catch(DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException("Cidade com id "+id+" se encontra em uso!");
 		}
@@ -59,7 +58,7 @@ public class CadastroCidadeService {
 	}
 	
 	public Cidade buscarOuFalhar(Long id) {
-		return cidadeRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(MSG_CIDADE_NAO_ENCONTRADA));
+		return cidadeRepository.findById(id).orElseThrow(() -> new CidadeNaoEncontradaException(id));
 	}
 	
 }
