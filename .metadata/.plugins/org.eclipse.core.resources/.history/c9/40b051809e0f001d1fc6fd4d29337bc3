@@ -1,6 +1,0 @@
-spring.profiles.active=test
-spring.jpa.open-in-view=true
-
-spring.jpa.hibernate.ddl-auto=none
-
-spring.flyway.locations=classpath:/db/migration,classpath:/test/db/migration

@@ -3,7 +3,6 @@ package com.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +46,7 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<? >adicionar(@RequestBody Restaurante restaurante){
+	public ResponseEntity<?>adicionar(@RequestBody Restaurante restaurante){
 		try {
 			restaurante =  cadastroRestaurante.salvar(restaurante);
 			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);

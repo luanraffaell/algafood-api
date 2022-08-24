@@ -1,7 +1,7 @@
 insert into cozinha (nome) values('Tailandesa');
 insert into cozinha (nome) values('Indiana');
-insert into cozinha (id, nome) values (3, 'Argentina');
-insert into cozinha (id, nome) values (4, 'Brasileira');
+insert into cozinha (nome) values('Argentina');
+insert into cozinha (nome) values('Brasileira');
 
 insert into estado (nome) values ('Minas Gerais');
 insert into estado (nome) values ('São Paulo');

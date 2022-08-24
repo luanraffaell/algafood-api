@@ -1,5 +1,6 @@
 package com.algafood.domain.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
 import com.algafood.domain.repository.CidadeRepository;
@@ -24,9 +26,13 @@ public class CadastroCidadeService {
 	private EstadoRepository estadoRepository;
 	
 	public Cidade adicionar(Cidade cidade) {
+		try {
 		Estado estado = buscarEstado(cidade.getEstado().getId());
 		cidade.setEstado(estado);
 		return cidadeRepository.save(cidade);
+		}catch(EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	public void deletar(Long id) {
@@ -39,6 +45,17 @@ public class CadastroCidadeService {
 		}
 	}
 	
+	public Cidade atualizar(Long id, Cidade cidade) {
+		Cidade cidadeAtual = buscarOuFalhar(id);
+		BeanUtils.copyProperties(cidade, cidadeAtual,"id");
+		
+		try {
+		return adicionar(cidadeAtual);
+		}catch(EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		
+	}
 	private Estado buscarEstado(Long id) {
 		return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Estado com id "+id+" não encontrado!"));
 
