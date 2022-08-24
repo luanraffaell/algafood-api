@@ -1,0 +1,5 @@
+package com.algafood.api.exceptionhandler;
+
+public class Problema {
+
+}
