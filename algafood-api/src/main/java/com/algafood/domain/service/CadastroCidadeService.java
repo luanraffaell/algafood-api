@@ -27,7 +27,8 @@ public class CadastroCidadeService {
 	
 	public Cidade adicionar(Cidade cidade) {
 		try {
-			buscarEstado(cidade.getEstado().getId());
+			Estado estado = buscarEstado(cidade.getEstado().getId());
+			cidade.setEstado(estado);
 		return cidadeRepository.save(cidade);
 		}catch(EstadoNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
