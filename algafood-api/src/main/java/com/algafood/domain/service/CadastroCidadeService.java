@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algafood.domain.exception.EstadoNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.algafood.domain.model.Cidade;
 import com.algafood.domain.model.Estado;
@@ -30,7 +31,7 @@ public class CadastroCidadeService {
 		Estado estado = buscarEstado(cidade.getEstado().getId());
 		cidade.setEstado(estado);
 		return cidadeRepository.save(cidade);
-		}catch(EntidadeNaoEncontradaException e) {
+		}catch(EstadoNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
@@ -48,16 +49,12 @@ public class CadastroCidadeService {
 	public Cidade atualizar(Long id, Cidade cidade) {
 		Cidade cidadeAtual = buscarOuFalhar(id);
 		BeanUtils.copyProperties(cidade, cidadeAtual,"id");
-		
-		try {
 		return adicionar(cidadeAtual);
-		}catch(EntidadeNaoEncontradaException e) {
-			throw new NegocioException(e.getMessage());
-		}
+
 		
 	}
 	private Estado buscarEstado(Long id) {
-		return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Estado com id "+id+" não encontrado!"));
+		return estadoRepository.findById(id).orElseThrow(() -> new EstadoNaoEncontradaException("Estado com id "+id+" não encontrado!"));
 
 	}
 	
