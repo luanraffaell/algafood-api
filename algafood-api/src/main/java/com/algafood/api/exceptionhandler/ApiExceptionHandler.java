@@ -16,6 +16,7 @@ import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -28,6 +29,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 //		rootCause = ex.getCause();
 		if(rootCause instanceof InvalidFormatException) {
 			return handleInvalidFormatException((InvalidFormatException)rootCause, headers,status,request);
+		}else if(rootCause instanceof PropertyBindingException) {
+			return handlePropertyBindingException((PropertyBindingException)rootCause,headers,status,request);
 		}
 		
 		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
@@ -38,6 +41,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 	
+	private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+		ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+		String path = ex.getPath().stream().map(ref -> ref.getFieldName()).collect(Collectors.joining("."));
+		String details = String.format("A propriedade '%s' não existe. "
+				+ "Corrija ou remova essa propriedade e tente novamente.", path);
+		Problem problem = createProblemBuilder(status, problemType, details).build();
+		
+		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+
 	private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 			ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
