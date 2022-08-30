@@ -1,5 +1,6 @@
 package com.algafood.api.exceptionhandler;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -154,6 +155,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
 		return Problem.builder().status(status.value()).type(problemType.getUri()).title(problemType.getTitle())
-				.detail(detail);
+				.detail(detail).timeStamp(LocalDateTime.now());
 	}
 }
