@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-
+	
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -97,6 +97,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
 		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> handleUncaughy(Exception ex, WebRequest request){
+		ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		String detail = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.";
+		Problem problem = createProblemBuilder(status, problemType, detail).build();
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 
 	@ExceptionHandler(EntidadeNaoEncontradaException.class)
