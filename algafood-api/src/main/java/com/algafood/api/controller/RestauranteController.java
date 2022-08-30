@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class RestauranteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?>adicionar(@RequestBody Restaurante restaurante){
+	public ResponseEntity<?>adicionar(@RequestBody @Valid Restaurante restaurante){
 		try {
 			restaurante =  cadastroRestaurante.salvar(restaurante);
 			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
