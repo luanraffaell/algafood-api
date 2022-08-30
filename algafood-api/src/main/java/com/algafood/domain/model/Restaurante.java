@@ -25,6 +25,7 @@ import javax.validation.constraints.PositiveOrZero;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -43,17 +44,17 @@ public class Restaurante implements Serializable {
 	
 	//@NotNull
 	//@NotEmpty
-	@NotBlank
+	@NotBlank(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private String nome;
 	
 	//@DecimalMin("0")
-	@PositiveOrZero
+	@PositiveOrZero(groups = Groups.CadastroRestaurante.class)
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
 	@Valid
-	@NotNull
+	@NotNull(groups = Groups.CadastroRestaurante.class)
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false) //apenas caso eu queira renomear o nome na tabela
 	private Cozinha cozinha;
