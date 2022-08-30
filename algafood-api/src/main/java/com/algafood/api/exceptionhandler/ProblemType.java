@@ -9,6 +9,7 @@ public enum ProblemType {
 	ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio"),
 	MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel","Mensagem incompreensivel"),
 	PARAMETRO_INVALIDO("/parametro-invalido","Parametro inválido"),
+	DADOS_INVALIDOS("/dados-invalidos","Dados inválidos"),
 	ERRO_DE_SISTEMA("/erro-de-sistema","Erro interno");
 	
 	private String title;
