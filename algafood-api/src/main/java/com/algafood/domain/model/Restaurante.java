@@ -27,7 +27,7 @@ import javax.validation.groups.Default;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algafood.Groups;
+import com.algafood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -51,7 +51,7 @@ public class Restaurante implements Serializable {
 	private String nome;
 	
 	//@DecimalMin("0")
-	@PositiveOrZero(message = "{Taxa.invalida}")
+	@PositiveOrZero
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
