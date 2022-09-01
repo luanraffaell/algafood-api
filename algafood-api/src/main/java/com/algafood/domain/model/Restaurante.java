@@ -51,7 +51,7 @@ public class Restaurante implements Serializable {
 	private String nome;
 	
 	//@DecimalMin("0")
-	@PositiveOrZero
+	@PositiveOrZero(message = "{Taxa.invalida}")
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
