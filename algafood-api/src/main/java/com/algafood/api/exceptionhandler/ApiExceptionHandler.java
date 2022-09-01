@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,9 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
@@ -54,8 +60,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			BindingResult bidingResult =  ex.getBindingResult();
 			
 			List<Problem.Field> problemFields = bidingResult.getFieldErrors().stream()
-					.map(fildErrors -> Problem.Field.builder().name(fildErrors.getField()).userMessage(fildErrors.getDefaultMessage()).build())
-					.collect(Collectors.toList());
+					.map(fildErrors -> {
+						String message = messageSource.getMessage(fildErrors, LocaleContextHolder.getLocale());
+						return Problem.Field.builder()
+							.name(fildErrors.getField())
+							.userMessage(message)
+							.build();
+							})
+							.collect(Collectors.toList());
 			
 			ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 			Problem problem = createProblemBuilder(status, problemType, detail).fields(problemFields).build();
