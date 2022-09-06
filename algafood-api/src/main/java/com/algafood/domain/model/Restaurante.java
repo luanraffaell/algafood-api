@@ -2,7 +2,7 @@ package com.algafood.domain.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,15 +68,15 @@ public class Restaurante implements Serializable {
 	@Embedded //propriedade de um tipo incorporavel. Incorporação
 	private Endereco endereco;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false)
-	private LocalDateTime dataCadastro;
+	private OffsetDateTime dataCadastro;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false)
-	private LocalDateTime dataAtualizacao;
+	private OffsetDateTime dataAtualizacao;
 	
 	@JsonIgnore
 	@ManyToMany
