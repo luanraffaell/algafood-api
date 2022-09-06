@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algafood.domain.exception.EntidadeEmUsoException;
@@ -25,6 +26,7 @@ public class CadastroCidadeService {
 	@Autowired
 	private EstadoRepository estadoRepository;
 	
+	@Transactional
 	public Cidade adicionar(Cidade cidade) {
 		try {
 			Estado estado = buscarEstado(cidade.getEstado().getId());
@@ -34,7 +36,7 @@ public class CadastroCidadeService {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-	
+	@Transactional
 	public void deletar(Long id) {
 		try {
 		cidadeRepository.deleteById(id);
@@ -44,7 +46,7 @@ public class CadastroCidadeService {
 			throw new EntidadeEmUsoException("Cidade com id "+id+" se encontra em uso!");
 		}
 	}
-	
+	@Transactional
 	public Cidade atualizar(Long id, Cidade cidade) {
 		Cidade cidadeAtual = buscarOuFalhar(id);
 		BeanUtils.copyProperties(cidade, cidadeAtual,"id");

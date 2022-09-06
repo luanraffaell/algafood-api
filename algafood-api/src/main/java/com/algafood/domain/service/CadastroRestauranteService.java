@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
@@ -24,6 +25,7 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 
+	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = buscarCozinha(cozinhaId);
@@ -31,7 +33,7 @@ public class CadastroRestauranteService {
 		restaurante.setCozinha(cozinha);
 		return restauranteRepository.save(restaurante);
 	}
-
+	@Transactional
 	public Restaurante atualizar(Restaurante restaurante) {
 		Restaurante restauranteAtual = restauranteRepository.findById(restaurante.getId())
 				.orElseThrow(() -> new RestauranteNaoEncontradaException(restaurante.getId()));
@@ -42,7 +44,7 @@ public class CadastroRestauranteService {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-
+	@Transactional
 	public void remover(Long id) {
 		try {
 			restauranteRepository.deleteById(id);
