@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algafood.api.assembler.RestauranteInputDesassembler;
 import com.algafood.api.assembler.RestauranteModelAssembler;
 import com.algafood.api.model.RestauranteDto;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.model.input.RestauranteInput;
 import com.algafood.domain.repository.RestauranteRepository;
@@ -48,6 +48,9 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
 	
+	@Autowired
+	private RestauranteInputDesassembler restauranteInputDesassembler;
+	
 	@GetMapping
 	public List<RestauranteDto> listar(){
 		return restauranteModelAssembler.toCollectionDto(restauranteRepository.findAll());
@@ -63,7 +66,7 @@ public class RestauranteController {
 	@PostMapping
 	public ResponseEntity<?>adicionar(@RequestBody @Valid RestauranteInput restauranteIntput){
 		try {
-			Restaurante restaurante = toDomainObject(restauranteIntput);
+			Restaurante restaurante = restauranteInputDesassembler.toDomainObject(restauranteIntput);
 			RestauranteDto restauranteDto = restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
 			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteDto);
 		} catch(EntidadeNaoEncontradaException e) {
@@ -113,15 +116,4 @@ public class RestauranteController {
 		}
 	}
 
-	private Restaurante toDomainObject(RestauranteInput restauranteInput) {
-		Restaurante restaurante = new Restaurante();
-		restaurante.setNome(restauranteInput.getNome());
-		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
-		Cozinha cozinha = new Cozinha();
-		cozinha.setId(restauranteInput.getCozinha().getId());
-		restaurante.setCozinha(cozinha);
-		return restaurante;
-		
-		
-	}
 }
