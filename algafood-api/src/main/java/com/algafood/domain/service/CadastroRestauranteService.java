@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algafood.domain.exception.EntidadeEmUsoException;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.exception.NegocioException;
@@ -27,11 +28,15 @@ public class CadastroRestauranteService {
 
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
+		try {
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = buscarCozinha(cozinhaId);
 
 		restaurante.setCozinha(cozinha);
 		return restauranteRepository.save(restaurante);
+		}catch(CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	@Transactional
 	public Restaurante atualizar(Restaurante restaurante) {
@@ -56,9 +61,8 @@ public class CadastroRestauranteService {
 	}
 
 	private Cozinha buscarCozinha(Long id) {
-		Cozinha cozinha = cozinhaRepository.findById(id).orElseThrow(
-				() -> new EntidadeNaoEncontradaException("Não existe cadastro de cozinha com o código:" + id));
-		return cozinha;
+		return cozinhaRepository.findById(id).orElseThrow(
+				() -> new CozinhaNaoEncontradaException("Não existe cadastro de cozinha com o código:" + id));
 	}
 
 	public Restaurante buscarOuFalhar(Long id) {

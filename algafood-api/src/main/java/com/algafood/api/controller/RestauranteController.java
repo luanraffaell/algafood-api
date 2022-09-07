@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algafood.api.model.CozinhaDto;
 import com.algafood.api.model.RestauranteDto;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algafood.domain.model.Cozinha;
 import com.algafood.domain.model.Restaurante;
+import com.algafood.domain.model.input.RestauranteInput;
 import com.algafood.domain.repository.RestauranteRepository;
 import com.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -57,8 +59,9 @@ public class RestauranteController {
 
 	
 	@PostMapping
-	public ResponseEntity<?>adicionar(@RequestBody @Valid Restaurante restaurante){
+	public ResponseEntity<?>adicionar(@RequestBody @Valid RestauranteInput restauranteIntput){
 		try {
+			Restaurante restaurante = toDomainObject(restauranteIntput);
 			RestauranteDto restauranteDto = toMethod(cadastroRestaurante.salvar(restaurante));
 			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteDto);
 		} catch(EntidadeNaoEncontradaException e) {
@@ -123,5 +126,16 @@ public class RestauranteController {
 		return restaurantes.stream()
 				.map(restaurante -> toMethod(restaurante))
 				.collect(Collectors.toList());
+	}
+	private Restaurante toDomainObject(RestauranteInput restauranteInput) {
+		Restaurante restaurante = new Restaurante();
+		restaurante.setNome(restauranteInput.getNome());
+		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(restauranteInput.getCozinha().getId());
+		restaurante.setCozinha(cozinha);
+		return restaurante;
+		
+		
 	}
 }
