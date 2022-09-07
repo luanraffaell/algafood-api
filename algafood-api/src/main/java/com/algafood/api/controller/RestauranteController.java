@@ -3,6 +3,7 @@ package com.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algafood.api.model.CozinhaDto;
+import com.algafood.api.model.RestauranteDto;
 import com.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algafood.domain.model.Restaurante;
 import com.algafood.domain.repository.RestauranteRepository;
@@ -42,33 +45,35 @@ public class RestauranteController {
 	private CadastroRestauranteService cadastroRestaurante;
 	
 	@GetMapping
-	public List<Restaurante> listar(){
-		return restauranteRepository.findAll();
+	public List<RestauranteDto> listar(){
+		return toCollectionDto(restauranteRepository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public Restaurante buscar(@PathVariable Long id){
-		return cadastroRestaurante.buscarOuFalhar(id);
+	public RestauranteDto buscar(@PathVariable Long id){
+		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(id);
+		return toMethod(restaurante);
 	}
+
 	
 	@PostMapping
 	public ResponseEntity<?>adicionar(@RequestBody @Valid Restaurante restaurante){
 		try {
-			restaurante =  cadastroRestaurante.salvar(restaurante);
-			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
+			RestauranteDto restauranteDto = toMethod(cadastroRestaurante.salvar(restaurante));
+			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteDto);
 		} catch(EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 	
 	@PutMapping("/{id}")
-	public Restaurante atualizar(@PathVariable Long id, @RequestBody @Valid Restaurante restaurante){
+	public RestauranteDto atualizar(@PathVariable Long id, @RequestBody @Valid Restaurante restaurante){
 		restaurante.setId(id);
-		return cadastroRestaurante.atualizar(restaurante);
+		return toMethod(cadastroRestaurante.atualizar(restaurante));
 	}
 	
 	@PatchMapping("/{id}")
-	public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos, HttpServletRequest request){
+	public RestauranteDto atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos, HttpServletRequest request){
 		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(id);
 		merge(campos,restauranteAtual,request);
 		return atualizar(id,restauranteAtual);
@@ -102,5 +107,21 @@ public class RestauranteController {
 			throw new HttpMessageNotReadableException(e.getMessage(),rootCause,serverHttpRequest);
 		}
 	}
-
+	private RestauranteDto toMethod(Restaurante restaurante) {
+		RestauranteDto restauranteDto = new RestauranteDto();
+		CozinhaDto cozinhaDto = new CozinhaDto();
+		cozinhaDto.setId(restaurante.getCozinha().getId());
+		cozinhaDto.setNome(restaurante.getCozinha().getNome());
+		
+		restauranteDto.setId(restaurante.getId());
+		restauranteDto.setNome(restaurante.getNome());
+		restauranteDto.setTaxaFrete(restaurante.getTaxaFrete());
+		restauranteDto.setCozinha(cozinhaDto);
+		return restauranteDto;
+	}
+	private List<RestauranteDto> toCollectionDto(List<Restaurante> restaurantes){
+		return restaurantes.stream()
+				.map(restaurante -> toMethod(restaurante))
+				.collect(Collectors.toList());
+	}
 }
